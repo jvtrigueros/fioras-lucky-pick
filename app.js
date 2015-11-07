@@ -1,13 +1,23 @@
 var express = require('express')
-  , path = require('path')
-  , favicon = require('serve-favicon')
-  , logger = require('morgan')
-  , cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
+  , cookieParser = require('cookie-parser')
+  , cors = require('cors')
+  , favicon = require('serve-favicon')
+  , jwt = require('express-jwt')
+  , logger = require('morgan')
+  , nconf = require('nconf')
+  , path = require('path')
+
+// Needs a config.json with all the keys, please look at config.sample.json for structure
+nconf.file('config.json')
 
 var routes = require('./routes/index')
 var users = require('./routes/users')
 var matches = require('./routes/matches')
+
+var authenticate = jwt({ secret: new Buffer(nconf.get('auth:secret'), 'base64')
+                       , audience: nconf.get('auth:audience')
+                       })
 
 var app = express()
 
@@ -21,11 +31,17 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.configure(function () {
+  app.use('/secured', authenticate)
+})
 
 app.use('/', routes)
 app.use('/users', users)
 app.use('/matches', matches)
+app.use('/registration', registration)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
