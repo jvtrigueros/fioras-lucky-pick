@@ -12,16 +12,13 @@
     <!-- Auth0Lock script -->
     <script src="//cdn.auth0.com/js/lock-7.9.min.js"></script>
     <script type="text/javascript">
-      var lock = new Auth0Lock('{{clientId}}', '{{domain}}');
+      var lock = new Auth0Lock('{{clientId}}', '{{domain}}')
 
       function signin() {
-        lock.show({
-          callbackURL: '{{baseurl}}/callback'
-          , responseType: 'code'
-          , authParams: {
-            scope: 'openid profile'
-          }
-        });
+        lock.show({ callbackURL: '{{baseurl}}/callback'
+                  , responseType: 'code'
+                  , authParams: { scope: 'openid profile' }
+                  })
       }
     </script>
   </body>

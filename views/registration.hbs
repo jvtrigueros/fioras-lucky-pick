@@ -2,16 +2,9 @@
 <form>
     Region:<br>
     <select name="region">
-        <option value="BR">BR</option>
-        <option value="EUNE">EUNE</option>
-        <option value="EUW">EUW</option>
-        <option value="KR">KR</option>
-        <option value="LAN">LAN</option>
-        <option value="LAS">LAS</option>
-        <option value="NA">NA</option>
-        <option value="OCE">OCE</option>
-        <option value="RU">RU</option>
-        <option value="TR">TR</option>
+      {{#each regions}}
+        <option value="{{this}}">{{this}}</option>
+      {{/each}}
     </select>
     <br>
 
