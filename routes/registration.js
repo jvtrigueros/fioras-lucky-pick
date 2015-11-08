@@ -38,8 +38,7 @@ var MongoClient = mongodb.MongoClient
 router.get('/', function (req, res, next) {
   var user = req.user || {id: null}
 
-  res.render('registration', {
-    regions: regions, roles: roles, pings: pings, _id: user.id, helpers: helpers})
+  res.render('registration', {regions: regions, roles: roles, pings: pings, _id: user.id, helpers: helpers})
 })
 
 router.post('/', function (req, res) {
