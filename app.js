@@ -4,12 +4,13 @@ var express = require('express')
   , cors = require('cors')
   , favicon = require('serve-favicon')
   , logger = require('morgan')
+  , mongodb = require('mongodb')
   , nconf = require('nconf')
   , passport = require('passport')
   , path = require('path')
+  , requireLogin = require('./scripts/requireLogin')
   , session = require('express-session')
   , strategy = require('./scripts/auth-strategy')
-  , requireLogin = require('./scripts/requireLogin')
 
 // Needs a config.json with all the keys, please look at config.sample.json for structure
 nconf.file('config.json')
@@ -18,6 +19,7 @@ var routes = require('./routes/index')
 var users = require('./routes/users')
 var matches = require('./routes/matches')
 var registration = require('./routes/registration')
+var profile = require("./routes/profile")
 
 var app = express()
 
@@ -46,9 +48,10 @@ app.use('/', routes)
 app.use('/users', users)
 app.use('/matches', matches)
 app.use('/registration', registration)
+app.use('/profile', profile)
 
 app.get('/cheese', requireLogin ,function (req, res) {
-  res.send('you got the cake ' + req.user + '!')
+  res.send('you got the cake ' + req.user.id + '!')
 })
 
 app.get('/callback', passport.authenticate('auth0', {failureRedirect: '/url-if-something-fails'}),
@@ -56,7 +59,10 @@ app.get('/callback', passport.authenticate('auth0', {failureRedirect: '/url-if-s
     if (!req.user) {
       throw new Error('user null')
     }
-    res.redirect("/cheese")
+
+    // Determine if user exists already or not
+
+    res.redirect("/registration")
 })
 
 // catch 404 and forward to error handler

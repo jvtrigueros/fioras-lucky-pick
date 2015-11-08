@@ -3,5 +3,10 @@
     "secret": "",
     "audience": ""
   },
-  "baseurl": ""
+  "baseurl": "",
+  "db": {
+    "url": "",
+    "user": "",
+    "pass": ""
+  }
 }
