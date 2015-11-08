@@ -62,16 +62,17 @@ app.get('/callback', passport.authenticate('auth0', {failureRedirect: '/url-if-s
     }
 
     // Determine if user exists already or not
-    MongoClient.connect('mongodb://' + nconf.get('db:url'), function (err, db) {
+    MongoClient.connect('mongodb://' + nconf.get('db:user') + ':' + nconf.get('db:pass') + '@' + nconf.get('db:url'), function (err, db) {
       if(err)
         console.log('Could not connect to database: ' + nconf.get('db:url'))
       else {
         var summonersCollection = db.collection('summoners')
 
-        var cursor = summonersCollection.find({ _id: req.user.id})
+        var cursor = summonersCollection.find({_id: req.user.id})
+
         cursor.limit(1).toArray(function (err, result) {
           if(err)
-            console.log('Could not turn find result into Array')
+            console.log('Could not turn find result into Array: ', err)
           else if(result.length)
             res.redirect("/profile")
           else
