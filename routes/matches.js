@@ -1,10 +1,22 @@
-var express = require('express');
-var router = express.Router();
+'use strict'
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('matches', { title: "Fiora's Lucky Pick",welcome: "Hi Please review your matches:"});
+var express = require('express')
+  , mongodb = require('mongodb')
+  , nconf = require('nconf')
+  , router = express.Router()
 
-});
+var MongoClient = mongodb.MongoClient
+  , mongoUrl = 'mongodb://' + nconf.get('db:user') + ':' + nconf.get('db:pass') + '@' + nconf.get('db:url')
 
-module.exports = router;
+router.get('/', function (req, res, next) {
+  MongoClient.connect(mongoUrl, function (err, db) {
+    db.collection('summoners').find().limit(10).toArray(function (err, summoners) {
+      if(!err)
+        res.render('matches', {summoners: summoners})
+      else
+        res.render('matches')
+    })
+  })
+})
+
+module.exports = router
