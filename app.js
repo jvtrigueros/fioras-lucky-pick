@@ -12,9 +12,6 @@ var express = require('express')
   , session = require('express-session')
   , strategy = require('./scripts/auth-strategy')
 
-// Needs a config.json with all the keys, please look at config.sample.json for structure
-nconf.file('config.json')
-
 var routes = require('./routes/index')
 var users = require('./routes/users')
 var matches = require('./routes/matches')
@@ -23,6 +20,9 @@ var profile = require("./routes/profile")
 
 var app = express()
   , MongoClient = mongodb.MongoClient
+
+// Needs a config.json with all the keys, please look at config.sample.json for structure
+nconf.file('config.json')
 
 // Local variables
 app.locals.clientId = nconf.get('auth:audience')
