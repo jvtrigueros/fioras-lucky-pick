@@ -25,17 +25,18 @@ var roles = [ "TOP"
 var MongoClient = mongodb.MongoClient
 
 router.get('/', function(req, res, next) {
-  res.render('registration', { regions: regions, roles: roles, user_id: req.user.id })
+  var user = req.user || {id: null}
+
+  res.render('registration', { regions: regions, roles: roles, _id: user.id })
 })
 
 router.post('/', function (req, res) {
-  console.log(nconf.get('db:user'))
-  /*MongoClient.connect('mongodb://' + nconf.get('db:user') + ':' + nconf.get('db:pass') + '@' + nconf.get('db:url'), function (err, db) {
+  MongoClient.connect('mongodb://' + nconf.get('db:user') + ':' + nconf.get('db:pass') + '@' + nconf.get('db:url'), function (err, db) {
     // TODO: talk to rito to get their rank
     db.collection('summoners').insertOne(req.body, function (err, result) {
       res.redirect('/profile')
     })
-  })*/
+  })
 })
 
 module.exports = router
