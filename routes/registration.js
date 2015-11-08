@@ -23,6 +23,7 @@ var roles = [ "TOP"
             ]
 
 var MongoClient = mongodb.MongoClient
+  , mongoUrl = 'mongodb://' + nconf.get('db:user') + ':' + nconf.get('db:pass') + '@' + nconf.get('db:url')
 
 router.get('/', function(req, res, next) {
   var user = req.user || {id: null}
@@ -31,7 +32,7 @@ router.get('/', function(req, res, next) {
 })
 
 router.post('/', function (req, res) {
-  MongoClient.connect('mongodb://' + nconf.get('db:user') + ':' + nconf.get('db:pass') + '@' + nconf.get('db:url'), function (err, db) {
+  MongoClient.connect(mongoUrl, function (err, db) {
     // TODO: talk to rito to get their rank
     db.collection('summoners').insertOne(req.body, function (err, result) {
       res.redirect('/profile')
