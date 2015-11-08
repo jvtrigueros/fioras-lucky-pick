@@ -16,6 +16,14 @@ var regions = [ "BR"
               , "TR"
               ]
 
+var roles = [
+            "TOP"
+            ,"MID"
+            ,"JUNGLE"
+            ,"ADC"
+            ,"SUPPORT"
+            ]
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('registration', { regions: regions });

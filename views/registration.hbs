@@ -24,6 +24,9 @@
 
     Main Role:<br>
     <select name="region">
+        {{#each roles}}
+            <option value"{{this}}>{{this}}</option>
+        {{/each}}
         <option value="TOP">TOP</option>
         <option value="MID">MID</option>
         <option value="JUNGLE">JUNGLE</option>
