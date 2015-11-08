@@ -32,15 +32,15 @@ league.bySummonerEntry = function (region, key, summonerId, cb) {
   })
 }
 
-module.exports = function (region, key) {
+module.exports = function (key) {
   return {
     summoner: {
-      byName: function (summonerName, cb) {
+      byName: function (region, summonerName, cb) {
         summoner.byName(region, key, summonerName, cb)
       }
     },
     league: {
-      bySummonerEntry: function (summonerId, cb) {
+      bySummonerEntry: function (region, summonerId, cb) {
         league.bySummonerEntry(region, key, summonerId, cb)
       }
     }

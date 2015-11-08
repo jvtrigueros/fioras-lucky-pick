@@ -3,14 +3,14 @@ var nconf = require('nconf')
 
 nconf.file('../config.json')
 
-var riot = riotConnector('na', nconf.get('riot:key'))
+var riot = riotConnector(nconf.get('riot:key'))
 
-/*riot.summoner.byName('trigoman', function (err, summonerDto) {
+/*riot.summoner.byName('na', 'trigoman', function (err, summonerDto) {
  console.log(summonerDto.id)
 
  })*/
 
-riot.league.bySummonerEntry(25758864, function (err, leagues) {
+riot.league.bySummonerEntry('na', 25758864, function (err, leagues) {
   if (!err)
     leagues
       .filter(function (league) {
