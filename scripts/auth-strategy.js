@@ -8,7 +8,7 @@ function createStrategy(nconf) {
   return new Auth0Strategy( { domain:       nconf.get('auth:domain')
                             , clientID:     nconf.get('auth:audience')
                             , clientSecret: nconf.get('auth:secret')
-                            , callbackURL:  'http://127.0.0.1:7000/callback'
+                            , callbackURL:  nconf.get('baseurl') + '/callback'
                             }
                           , function(accessToken, refreshToken, extraParams, profile, done) {
                               // accessToken is the token to call Auth0 API (not needed in the most cases)

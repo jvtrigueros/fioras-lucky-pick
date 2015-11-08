@@ -24,6 +24,7 @@ var app = express()
 // Local variables
 app.locals.clientId = nconf.get('auth:audience')
 app.locals.domain = nconf.get('auth:domain')
+app.locals.baseurl = nconf.get('baseurl')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -64,7 +65,7 @@ app.use(function(req, res, next) {
   err.status = 404
   next(err)
 })
-
+1
 // error handlers
 
 // development error handler

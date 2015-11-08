@@ -16,7 +16,7 @@
 
       function signin() {
         lock.show({
-          callbackURL: 'http://127.0.0.1:7000/callback'
+          callbackURL: '{{baseurl}}/callback'
           , responseType: 'code'
           , authParams: {
             scope: 'openid profile'
