@@ -10,19 +10,18 @@ var express = require('express')
   , path = require('path')
   , requireLogin = require('./scripts/requireLogin')
   , session = require('express-session')
-  , strategy = require('./scripts/auth-strategy')
+
+// Needs a config.json with all the keys, please look at config.sample.json for structure
+nconf.file('config.json')
 
 var routes = require('./routes/index')
-var users = require('./routes/users')
 var matches = require('./routes/matches')
 var registration = require('./routes/registration')
 var profile = require("./routes/profile")
 
 var app = express()
   , MongoClient = mongodb.MongoClient
-
-// Needs a config.json with all the keys, please look at config.sample.json for structure
-nconf.file('config.json')
+  , strategy = require('./scripts/auth-strategy')
 
 // Local variables
 app.locals.clientId = nconf.get('auth:audience')
@@ -46,16 +45,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/', routes)
-app.use('/users', users)
 app.use('/matches', matches)
 app.use('/registration', registration)
 app.use('/profile', profile)
 
-app.get('/cheese', requireLogin ,function (req, res) {
-  res.send('you got the cake ' + req.user.id + '!')
-})
-
-app.get('/callback', passport.authenticate('auth0', {failureRedirect: '/url-if-something-fails'}),
+app.get('/callback', passport.authenticate('auth0', {failureRedirect: '/'}),
   function (req, res) {
     if (!req.user) {
       throw new Error('user null')

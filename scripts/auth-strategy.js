@@ -4,7 +4,7 @@ var passport = require('passport')
   , Auth0Strategy = require('passport-auth0')
   , nconf = require('nconf')
 
-function createStrategy(nconf) {
+function createStrategy() {
   return new Auth0Strategy( { domain:       nconf.get('auth:domain')
                             , clientID:     nconf.get('auth:audience')
                             , clientSecret: nconf.get('auth:secret')
@@ -19,7 +19,7 @@ function createStrategy(nconf) {
                           )
 }
 
-var strategy = createStrategy(nconf.file('config.json'))
+var strategy = createStrategy()
 
 passport.use(strategy)
 

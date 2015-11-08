@@ -22,6 +22,8 @@ gulp.task('nodemon', function (cb) {
   var options = { script: 'bin/www'
                 , watch: [ 'views/*.hbs'
                          , 'routes/*.js'
+                         , 'scripts/*.js'
+                         , 'app.js'
                          , 'bin/www'
                          ]
                 }
