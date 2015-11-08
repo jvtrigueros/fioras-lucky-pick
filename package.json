@@ -23,7 +23,6 @@
     "nconf": "^0.8.2",
     "passport": "^0.3.0",
     "passport-auth0": "^0.5.0",
-    "riot-api": "^0.1.0",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
