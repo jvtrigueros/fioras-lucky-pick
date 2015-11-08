@@ -3,14 +3,14 @@
     Region:<br>
     <select name="region" class="form-control">
       {{#each regions}}
-        <option value="{{this}}">{{this}}</option>
+        <option value="{{this}}">{{toUpperCase this}}</option>
       {{/each}}
     </select>
     <br>
 
     <div class="form-group">
         <label for="summoner">Summoner Name:</label>
-        <input type="text" class="form-control" name="summoner" placeholder="Ex. xX420NOSCOPEXx">
+        <input type="text" class="form-control" name="summoner" placeholder="Ex. xX420NOSCOPEXx" value="trigoman">
     </div>
     Average Ping:<br>
     <select name="ping" class="form-control">
@@ -25,14 +25,14 @@
     Main Role:<br>
     <select name="role" class="form-control">
         {{#each roles}}
-            <option value="{{this}}">{{this}}</option>
+            <option value="{{this}}">{{toUpperCase this}}</option>
         {{/each}}
     </select>
     <br>
 
     <div class="form-group">
-        <label for="main">Main Champion</label>
-        <input type="text" class="form-control" id="main" placeholder="Ex. Veigar">
+        <label for="champion">Main Champion</label>
+        <input type="text" class="form-control" id="champion" placeholder="Ex. Veigar" value="Shyvanna">
     </div>
     <input type="hidden" name="_id" readonly value="{{_id}}">
 
