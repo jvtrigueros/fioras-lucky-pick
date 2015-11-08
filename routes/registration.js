@@ -1,8 +1,5 @@
-/**
- * Created by Daniel on 11/7/2015.
- */
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
 var regions = [ "BR"
               , "EUNE"
@@ -16,17 +13,16 @@ var regions = [ "BR"
               , "TR"
               ]
 
-var roles = [
-            "TOP"
-            ,"MID"
-            ,"JUNGLE"
-            ,"ADC"
-            ,"SUPPORT"
+var roles = [ "TOP"
+            , "MID"
+            , "JUNGLE"
+            , "ADC"
+            , "SUPPORT"
             ]
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('registration', { regions: regions });
-});
+    res.render('registration', { regions: regions, roles: roles })
+})
 
-module.exports = router;
+module.exports = router

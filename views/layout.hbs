@@ -4,23 +4,11 @@
     <!-- Setting the right viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>{{title}}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://bootswatch.com/superhero/bootstrap.min.css" />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     {{{body}}}
-    <button onclick="window.signin();">Login</button>
     <!-- Auth0Lock script -->
-    <script src="//cdn.auth0.com/js/lock-7.9.min.js"></script>
-    <script type="text/javascript">
-      var lock = new Auth0Lock('{{clientId}}', '{{domain}}')
-
-      function signin() {
-        lock.show({ callbackURL: '{{baseurl}}/callback'
-                  , responseType: 'code'
-                  , authParams: { scope: 'openid profile' }
-                  })
-      }
-    </script>
   </body>
 </html>
