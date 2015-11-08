@@ -14,18 +14,16 @@
     </div>
     Average Ping:<br>
     <select name="ping" class="form-control">
-        <option value="GODLY">0-20</option>
-        <option value="LOW">21-60</option>
-        <option value="MEDIUM">61-100</option>
-        <option value="HIGH">101-149</option>
-        <option value="UNPLAYABLE">150+</option>
+      {{#each pings}}
+        <option value="{{name}}">{{range}}</option>
+      {{/each}}
     </select>
     <br>
 
     Main Role:<br>
     <select name="role" class="form-control">
         {{#each roles}}
-            <option value="{{this}}">{{toUpperCase this}}</option>
+            <option value="{{this}}">{{this}}</option>
         {{/each}}
     </select>
     <br>

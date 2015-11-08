@@ -2,6 +2,7 @@ var express = require('express')
   , mongodb = require('mongodb')
   , nconf = require('nconf')
   , riotConnector = require('../scripts/riotconnector')
+  , helpers = require('../scripts/hbs-helpers')
   , router = express.Router()
 
 var regions = [ 'br'
@@ -23,6 +24,13 @@ var roles = [ 'Top'
             , 'Support'
             ]
 
+var pings = [ {name: 'GODLY' , range: '0-20'}
+            , {name: 'LOW' , range: '21-60'}
+            , {name: 'MEDIUM' , range: '61-100'}
+            , {name: 'HIGH' , range: '101-149'}
+            , {name: 'UNPLAYABLE' , range: '150+'}
+            ]
+
 var MongoClient = mongodb.MongoClient
   , mongoUrl = 'mongodb://' + nconf.get('db:user') + ':' + nconf.get('db:pass') + '@' + nconf.get('db:url')
   , riot = riotConnector(nconf.get('riot:key'))
@@ -31,12 +39,7 @@ router.get('/', function (req, res, next) {
   var user = req.user || {id: null}
 
   res.render('registration', {
-    regions: regions, roles: roles, _id: user.id, helpers: {
-      toUpperCase: function (str) {
-        return str.toUpperCase(str)
-      }
-    }
-  })
+    regions: regions, roles: roles, pings: pings, _id: user.id, helpers: helpers})
 })
 
 router.post('/', function (req, res) {
