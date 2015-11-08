@@ -3,10 +3,13 @@ var express = require('express')
   , cookieParser = require('cookie-parser')
   , cors = require('cors')
   , favicon = require('serve-favicon')
-  , jwt = require('express-jwt')
   , logger = require('morgan')
   , nconf = require('nconf')
+  , passport = require('passport')
   , path = require('path')
+  , session = require('express-session')
+  , strategy = require('./scripts/auth-strategy')
+  , requireLogin = require('./scripts/requireLogin')
 
 // Needs a config.json with all the keys, please look at config.sample.json for structure
 nconf.file('config.json')
@@ -14,12 +17,13 @@ nconf.file('config.json')
 var routes = require('./routes/index')
 var users = require('./routes/users')
 var matches = require('./routes/matches')
-
-var authenticate = jwt({ secret: new Buffer(nconf.get('auth:secret'), 'base64')
-                       , audience: nconf.get('auth:audience')
-                       })
+var registration = require('./routes/registration')
 
 var app = express()
+
+// Local variables
+app.locals.clientId = nconf.get('auth:audience')
+app.locals.domain = nconf.get('auth:domain')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -31,17 +35,28 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(session({secret: 'shhh'}))
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')))
-
-app.configure(function () {
-  app.use('/secured', authenticate)
-})
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/', routes)
 app.use('/users', users)
 app.use('/matches', matches)
 app.use('/registration', registration)
+
+app.get('/cheese', requireLogin ,function (req, res) {
+  res.send('you got the cake ' + req.user + '!')
+})
+
+app.get('/callback', passport.authenticate('auth0', {failureRedirect: '/url-if-something-fails'}),
+  function (req, res) {
+    if (!req.user) {
+      throw new Error('user null')
+    }
+    res.redirect("/cheese")
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

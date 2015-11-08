@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Setting the right viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     {{{body}}}
+    <button onclick="window.signin();">Login</button>
+    <!-- Auth0Lock script -->
+    <script src="//cdn.auth0.com/js/lock-7.9.min.js"></script>
+    <script type="text/javascript">
+      var lock = new Auth0Lock('{{clientId}}', '{{domain}}');
+
+      function signin() {
+        lock.show({
+          callbackURL: 'http://127.0.0.1:7000/callback'
+          , responseType: 'code'
+          , authParams: {
+            scope: 'openid profile'
+          }
+        });
+      }
+    </script>
   </body>
 </html>
