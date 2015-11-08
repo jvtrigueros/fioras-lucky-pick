@@ -18,11 +18,9 @@ summoner.byName = function (region, key, summonerName, cb) {
   request(url, function (err, res, body) {
     if(!err) {
       if(res.statusCode == 404) {
-        var summonerDto = {}
-        summonerDto[summonerName] = {}
-        cb(summonerDto)
+        cb(new Error('Summoner with name ' + summonerName + ' does not exist.'), null)
       } else
-        cb(JSON.parse(body)[summonerName])
+        cb(null, JSON.parse(body)[summonerName])
     } else
       console.log(err, url)
   })
