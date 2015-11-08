@@ -1,16 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Setting the right viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="http://bootswatch.com/superhero/bootstrap.min.css"/>
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
 <div class="container container-table">
-    <div class="row vertical-center-row">
-        <div class="text-center col-md-4 col-md-offset-4">
-            <h1>Welcome to {{title}}</h1>
-            <br>
-            <button class="btn btn-default btn-lg" onclick="window.signin();">Login</button>
+  <div class="row vertical-center-row">
+    <div class="text-center col-md-4 col-md-offset-4">
+      <h1>Welcome to {{title}}</h1>
+      <br>
+      <button class="btn btn-default btn-lg" onclick="window.signin();">Login</button>
 
 
-            <h3>Who we are?</h3>
-            <h4>So have you ever struggled to find a Duo partner for League of Legends? With this website you can register and we will try to find you someone based on your provided information</h4>
-            <h6>Think of us like the website that rhymes with limber but for LoL</h6>
-        </div>
-</div>
+      <h3>Who we are?</h3>
+      <h4>So have you ever struggled to find a Duo partner for League of Legends? With this website you can register and we will try to find you someone based on your provided information</h4>
+      <h6>Think of us like the website that rhymes with limber but for LoL</h6>
+    </div>
+  </div>
 </div>
 
 <script src="//cdn.auth0.com/js/lock-7.9.min.js"></script>
@@ -24,3 +34,5 @@
     })
   }
 </script>
+</body>
+</html>
