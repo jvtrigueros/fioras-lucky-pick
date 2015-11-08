@@ -16,11 +16,11 @@ var regions = [ 'br'
               , 'tr'
               ]
 
-var roles = [ 'top'
-            , 'mid'
-            , 'jungle'
-            , 'adc'
-            , 'support'
+var roles = [ 'Top'
+            , 'Mid'
+            , 'Jungle'
+            , 'Adc'
+            , 'Support'
             ]
 
 var MongoClient = mongodb.MongoClient
@@ -45,7 +45,6 @@ router.post('/', function (req, res) {
   riot.summoner.byName(result.region, result.summoner, function (err, summonerDto) {
     if (!err) {
       result.summonerId = summonerDto.id
-      console.log('registration.post.byName', result)
       riot.league.bySummonerEntry(result.region, result.summonerId, function (err, leagues) {
         if (!err)
           leagues
