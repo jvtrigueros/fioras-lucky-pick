@@ -22,6 +22,7 @@ var registration = require('./routes/registration')
 var profile = require("./routes/profile")
 
 var app = express()
+  , MongoClient = mongodb.MongoClient
 
 // Local variables
 app.locals.clientId = nconf.get('auth:audience')
@@ -61,8 +62,23 @@ app.get('/callback', passport.authenticate('auth0', {failureRedirect: '/url-if-s
     }
 
     // Determine if user exists already or not
+    MongoClient.connect('mongodb://' + nconf.get('db:url'), function (err, db) {
+      if(err)
+        console.log('Could not connect to database: ' + nconf.get('db:url'))
+      else {
+        var summonersCollection = db.collection('summoners')
 
-    res.redirect("/registration")
+        var cursor = summonersCollection.find({ _id: req.user.id})
+        cursor.limit(1).toArray(function (err, result) {
+          if(err)
+            console.log('Could not turn find result into Array')
+          else if(result.length)
+            res.redirect("/profile")
+          else
+            res.redirect("/registration")
+        })
+      }
+    })
 })
 
 // catch 404 and forward to error handler
@@ -71,7 +87,7 @@ app.use(function(req, res, next) {
   err.status = 404
   next(err)
 })
-1
+
 // error handlers
 
 // development error handler
