@@ -4,16 +4,17 @@ var request = require('request')
 
 var API_KEY = ''
 var REGION = ''
-var API_VERSION = 'v1.4'
 
 function baseApiUrl(region) {
-  return 'https://' + region + '.api.pvp.net/api/lol/' + region + '/' + API_VERSION + '/'
+  return 'https://' + region + '.api.pvp.net/api/lol/' + region + '/'
 }
 
-var summoner = {}
+var summoner = { apiUrl: 'v1.4/summoner/' }
+var stats = { apiUrl: 'v1.3/stats' }
 
 summoner.byName = function (region, key, summonerName, cb) {
-  var url = baseApiUrl(region) + 'summoner/by-name/' + summonerName + '?api_key=' + key
+  var url = baseApiUrl(region) + this.apiUrl + 'by-name/' + summonerName + '?api_key=' + key
+
   request(url, function (err, res, body) {
     if(!err) {
       if(res.statusCode == 404) {
