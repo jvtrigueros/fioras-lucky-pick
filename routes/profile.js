@@ -1,11 +1,22 @@
 'use strict'
 
 var express = require('express')
-var router = express.Router()
+  , mongodb = require('mongodb')
+  , nconf = require('nconf')
+  , router = express.Router()
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('profile', { })
+var MongoClient = mongodb.MongoClient
+  , mongoUrl = 'mongodb://' + nconf.get('db:user') + ':' + nconf.get('db:pass') + '@' + nconf.get('db:url')
+
+router.get('/', function (req, res, next) {
+  MongoClient.connect(mongoUrl, function (err, db) {
+    db.collection('summoners').find().limit(1).next(function (err, summoner) {
+      if(!err)
+        res.render('profile', summoner)
+      else
+        res.render('profile')
+    })
+  })
 })
 
 module.exports = router
