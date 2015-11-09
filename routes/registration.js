@@ -56,7 +56,6 @@ router.post('/', function (req, res) {
 
   riot.summoner.byName(result.region, result.summoner, function (err, summonerDto) {
     if (!err) {
-      console.log(summonerDto)
       result._id = result._id || guid()
       result.summonerId = summonerDto.id
       result.iconId = summonerDto['profileIconId']

@@ -6,7 +6,11 @@
 <div class="row">
     {{#each summoners}}
         <div class="col-md-4">
-            <img src="{{../iconUrl}}/{{#if iconId}}{{iconId}}{{else}}0{{/if}}.png" width="200px" alt="{{summoner}}">
+            <img class="img-responsive" src="{{../iconUrl}}/{{#if iconId}}{{iconId}}{{else}}0{{/if}}.png" alt="{{summoner}}">
+            <div class="carousel-caption">
+              <p>{{summoner}}</p>
+              <p>{{tier}} {{division}}</p>
+            </div>
         </div>
     {{/each}}
 </div>
