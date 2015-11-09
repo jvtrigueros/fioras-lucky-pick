@@ -5,13 +5,13 @@ var express = require('express')
   , helpers = require('../scripts/hbs-helpers')
   , router = express.Router()
 
-var regions = [ 'br'
+var regions = [ 'na'
+              , 'br'
               , 'eune'
               , 'euw'
               , 'kr'
               , 'lan'
               , 'las'
-              , 'na'
               , 'oce'
               , 'ru'
               , 'tr'
@@ -47,6 +47,8 @@ router.post('/', function (req, res) {
   riot.summoner.byName(result.region, result.summoner, function (err, summonerDto) {
     if (!err) {
       result.summonerId = summonerDto.id
+      result.iconId = summonerDto['profileIconId']
+
       riot.league.bySummonerEntry(result.region, result.summonerId, function (err, leagues) {
         if (!err)
           leagues
