@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
   MongoClient.connect(mongoUrl, function (err, db) {
     db.collection('summoners').find().limit(1).next(function (err, summoner) {
       if(!err) {
-        summoner.region = helpers.toUpperCase(summoner.region)
+        summoner.region = summoner.region.toUpperCase()
         res.render('profile', summoner)
       }
       else
