@@ -3,6 +3,10 @@
     <li role="user" class="active"><a href="matches">Matches</a></li>
 </ul>
 
-
-<h1>{{welcome}}</h1>
-<h3>Welcome to {{title}}</h3>
+<div class="row">
+    {{#each summoners}}
+        <div class="col-md-4">
+            <img src="{{../iconUrl}}/{{#if iconId}}{{iconId}}{{else}}0{{/if}}.png" width="200px" alt="{{summoner}}">
+        </div>
+    {{/each}}
+</div>
