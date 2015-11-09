@@ -10,13 +10,17 @@ function baseApiUrl(region) {
 }
 
 summoner.byName = function (region, key, summonerName, cb) {
-  var url = baseApiUrl(region) + this.apiUrl + 'by-name/' + summonerName + '?api_key=' + key
+  var sanitizedSummoner = summonerName.replace(/\s/g, '').toLowerCase()
+  var url = baseApiUrl(region) + this.apiUrl + 'by-name/' + sanitizedSummoner + '?api_key=' + key
 
   request(url, function (err, res, body) {
     if (!err) {
       if (res.statusCode == 404) {
         cb(new Error('Summoner with name ' + summonerName + ' does not exist.'), null)
-      } else cb(null, JSON.parse(body)[summonerName])
+      } else {
+        var result = JSON.parse(body)
+        cb(null, result[sanitizedSummoner])
+      }
     } else cb(err, null)
   })
 }
