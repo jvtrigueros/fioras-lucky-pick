@@ -27,10 +27,13 @@ summoner.byName = function (region, key, summonerName, cb) {
 
 league.bySummonerEntry = function (region, key, summonerId, cb) {
   var url = baseApiUrl(region) + this.apiUrl + 'by-summoner/' + summonerId + '/entry?api_key=' + key
-
+  console.log(url)
   request(url, function (err, res, body) {
-    if (!err && res.statusCode == 200) {
+    if(res.statusCode == 404)
+      cb(new Error('Summoner has not played any ranked games this season.'), null)
+    else if (!err && res.statusCode == 200) {
       var result = JSON.parse(body)
+      console.log(result)
       cb(null, result[summonerId.toString()])
     } else cb(err, null)
   })
