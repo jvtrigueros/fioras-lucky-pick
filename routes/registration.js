@@ -41,11 +41,23 @@ router.get('/', function (req, res, next) {
   res.render('registration', {regions: regions, roles: roles, pings: pings, _id: user.id, helpers: helpers})
 })
 
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1)
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4()
+}
+
 router.post('/', function (req, res) {
   var result = req.body
 
   riot.summoner.byName(result.region, result.summoner, function (err, summonerDto) {
     if (!err) {
+      console.log(summonerDto)
+      result._id = result._id || guid()
       result.summonerId = summonerDto.id
       result.iconId = summonerDto['profileIconId']
 
@@ -63,8 +75,10 @@ router.post('/', function (req, res) {
                 db.collection('summoners').insertOne(result, function (err) {
                   if(!err)
                     res.redirect('/profile')
-                  else
+                  else {
+                    console.log(err)
                     res.redirect('back')
+                  }
                 })
               })
             })
